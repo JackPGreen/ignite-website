@@ -3584,560 +3584,1321 @@ Size these quotas together with <code>-Xmx</code> and the expected SQL concurren
 <div class="sect2">
 <h3 id="supported-functions">Supported Functions</h3>
 <div class="paragraph">
-<p>The Calcite-based SQL engine currently supports:</p>
+<p>The Calcite-based SQL engine currently supports the following user-facing functions and operators.</p>
 </div>
+<div class="sect3">
+<h4 id="aggregate-functions">Aggregate functions</h4>
 <table class="tableblock frame-all grid-all stripes-even stretch">
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 75%;">
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Group</th>
-<th class="tableblock halign-left valign-top">Functions list</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+<th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Aggregate functions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>, <code>ANY_VALUE</code>, <code>LISTAGG</code>, <code>GROUP_CONCAT</code>, <code>STRING_AGG</code>, <code>ARRAY_AGG</code>, <code>ARRAY_CONCAT_AGG</code>, <code>EVERY</code>, <code>SOME</code>, <code>BIT_AND</code>, <code>BIT_OR</code>, <code>BIT_XOR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COUNT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COUNT([ALL | DISTINCT] value)</code> or <code>COUNT(*)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the number of input rows or non-null input values.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String functions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UPPER</code>, <code>LOWER</code>, <code>INITCAP</code>, <code>TO_BASE64</code>, <code>FROM_BASE64</code>, <code>MD5</code>, <code>SHA1</code>, <code>SUBSTRING</code>, <code>LEFT</code>, <code>RIGHT</code>, <code>REPLACE</code>, <code>TRANSLATE</code>, <code>CHR</code>, <code>CHAR_LENGTH</code>, <code>CHARACTER_LENGTH</code>, <code>LENGTH</code>, <code>CONCAT</code>, <code>OVERLAY</code>, <code>POSITION</code>, <code>ASCII</code>, <code>REPEAT</code>, <code>SPACE</code>, <code>STRCMP</code>, <code>SOUNDEX</code>, <code>DIFFERENCE</code>, <code>REVERSE</code>, <code>TRIM</code>, <code>LTRIM</code>, <code>RTRIM</code>, <code>REGEXP_REPLACE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SUM</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SUM([ALL | DISTINCT] numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the sum of numeric input values.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Math functions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MOD</code>, <code>EXP</code>, <code>POWER</code>, <code>LN</code>, <code>LOG10</code>, <code>ABS</code>, <code>RAND</code>, <code>RAND_INTEGER</code>, <code>ACOS</code>, <code>ACOSH</code>, <code>ASIN</code>, <code>ASINH</code>, <code>ATAN</code>, <code>ATANH</code>, <code>ATAN2</code>, <code>SQRT</code>, <code>CBRT</code>, <code>COS</code>, <code>COSH</code>, <code>COT</code>, <code>COTH</code>, <code>DEGREES</code>, <code>RADIANS</code>, <code>ROUND</code>, <code>SIGN</code>, <code>SIN</code>, <code>SINH</code>, <code>TAN</code>, <code>TANH</code>, <code>SEC</code>, <code>SECH</code>, <code>CSC</code>, <code>CSCH</code>, <code>TRUNCATE</code>, <code>PI</code>, <code>BITAND</code>, <code>BITOR</code>, <code>BITXOR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AVG</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AVG([ALL | DISTINCT] numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the average value of numeric input values.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Date and time functions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXTRACT</code>, <code>FLOOR</code>, <code>CEIL</code>, <code>TIMESTAMPADD</code>, <code>TIMESTAMPDIFF</code>, <code>LAST_DATE</code>, <code>DAYNAME</code>, <code>MONTHNAME</code>, <code>DAYOFMONTH</code>, <code>DAYOFWEEK</code>, <code>DAYOFYEAR</code>, <code>YEAR</code>, <code>QUARTER</code>, <code>MONTH</code>, <code>WEEK</code>, <code>HOUR</code>, <code>MINUTE</code>, <code>SECOND</code>, <code>TIMESTAMP_SECONDS</code>, <code>TIMESTAMP_MILLIS</code>, <code>TIMESTAMP_MICROS</code>, <code>UNIX_SECONDS</code>, <code>UNIX_MILLIS</code>, <code>UNIX_MICROS</code>, <code>UNIX_DATE</code>, <code>DATE_FROM_UNIX_DATE</code>, <code>DATE</code>, <code>TIME</code>, <code>DATETIME</code>, <code>CURRENT_TIME</code>, <code>CURRENT_TIMESTAMP</code>, <code>CURRENT_DATE</code>, <code>LOCALTIME</code>, <code>LOCALTIMESTAMP</code>, <code>TO_CHAR</code>, <code>TO_DATE</code>, <code>TO_TIMESTAMP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MIN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MIN([ALL | DISTINCT] value)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the minimum input value.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">XML functions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXTRACTVALUE</code>, <code>XMLTRANSFORM</code>, <code>EXTRACT</code>, <code>EXISTSNODE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MAX</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MAX([ALL | DISTINCT] value)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the maximum input value.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSON functions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_VALUE</code>, <code>JSON_QUERY</code>, <code>JSON_TYPE</code>, <code>JSON_EXISTS</code>, <code>JSON_DEPTH</code>, <code>JSON_KEYS</code>, <code>JSON_PRETTY</code>, <code>JSON_LENGTH</code>, <code>JSON_REMOVE</code>, <code>JSON_STORAGE_SIZE</code>, <code>JSON_OBJECT</code>, <code>JSON_ARRAY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ANY_VALUE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ANY_VALUE([ALL | DISTINCT] value)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns one arbitrary input value.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Other functions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ROW</code>, <code>CAST</code>, <code>COALESCE</code>, <code>NVL</code>, <code>NULLIF</code>, <code>CASE</code>, <code>DECODE</code>, <code>LEAST</code>, <code>GREATEST</code>, <code>COMPRESS</code>, <code>OCTET_LENGTH</code>, <code>TYPEOF</code>, <code>QUERY_ENGINE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LISTAGG</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LISTAGG(value[, separator]) WITHIN GROUP (ORDER BY sortExpr)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Concatenates values from a group in the requested order.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GROUP_CONCAT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GROUP_CONCAT(value[, separator] [ORDER BY sortExpr])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Concatenates values from a group, optionally using a separator and ordering.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>STRING_AGG</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>STRING_AGG(value, separator [ORDER BY sortExpr])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Concatenates string values from a group using a separator.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ARRAY_AGG</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ARRAY_AGG(value [ORDER BY sortExpr])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collects input values into an array.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ARRAY_CONCAT_AGG</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ARRAY_CONCAT_AGG(arrayValue [ORDER BY sortExpr])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Concatenates arrays from input rows into one array.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EVERY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EVERY(condition)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns <code>TRUE</code> if every input condition is <code>TRUE</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SOME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SOME(condition)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns <code>TRUE</code> if at least one input condition is <code>TRUE</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BIT_AND</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BIT_AND(integer)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aggregates integer values using bitwise AND.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BIT_OR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BIT_OR(integer)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aggregates integer values using bitwise OR.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BIT_XOR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BIT_XOR(integer)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aggregates integer values using bitwise XOR.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aggregate <code>FILTER</code> clause</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aggregateFunction(&#8230;&#8203;) FILTER (WHERE condition)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Applies an aggregate function only to input rows that satisfy the condition.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>For more information on these functions, please see the <a href="https://calcite.apache.org/docs/reference.html#operators-and-functions" target="_blank" rel="noopener">Apache Calcite SQL language reference</a>.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="supported-data-types">Supported Data Types</h3>
-<div class="paragraph">
-<p>Below are the data types supported by the Calcite-based SQL engine:</p>
-</div>
+<div class="sect3">
+<h4 id="string-functions-and-predicates">String functions and predicates</h4>
 <table class="tableblock frame-all grid-all stripes-even stretch">
 <colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Data type</th>
-<th class="tableblock halign-left valign-top">Mapped to Java class</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+<th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOLEAN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UPPER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UPPER(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts a string to uppercase.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DECIMAL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.math.BigDecimal</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOWER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOWER(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts a string to lowercase.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DOUBLE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Double</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>INITCAP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>INITCAP(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts each word to initial uppercase followed by lowercase characters.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">REAL/FLOAT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Float</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TO_BASE64</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TO_BASE64(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Encodes a string using Base64.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Integer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FROM_BASE64</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FROM_BASE64(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decodes a Base64 string.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Long</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MD5</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MD5(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the MD5 hash of a string as a hexadecimal string.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMALLINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Short</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SHA1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SHA1(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the SHA-1 hash of a string as a hexadecimal string.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TINYINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Byte</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SUBSTRING</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SUBSTRING(string FROM start [FOR length])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a substring starting at the specified position.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CHAR/VARCHAR</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LEFT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LEFT(string, length)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the leftmost characters of a string.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DATE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.sql.Date</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RIGHT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RIGHT(string, length)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the rightmost characters of a string.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TIME</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.sql.Time</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REPLACE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REPLACE(string, search[, replacement])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Replaces occurrences of a search string.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TIMESTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.sql.Timestamp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TRANSLATE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TRANSLATE(string, fromString, toString)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Replaces characters from one set with the corresponding characters from another set.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INTERVAL YEAR TO MONTH</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.time.Period</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CHR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CHR(integer)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the character for the specified code point.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INTERVAL DAY TO SECOND</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.time.Duration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CHAR_LENGTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CHAR_LENGTH(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the number of characters in a string.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BINARY/VARBINARY</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>byte[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CHARACTER_LENGTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CHARACTER_LENGTH(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the number of characters in a string.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">UUID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.util.UUID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LENGTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LENGTH(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alias for <code>CHAR_LENGTH(string)</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OTHER</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>||</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string || string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Concatenates two strings.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CONCAT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CONCAT(string, string)</code> or <code>CONCAT(string[, string]&#8230;&#8203;)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Concatenates strings.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>OVERLAY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>OVERLAY(string1 PLACING string2 FROM start [FOR length])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Replaces part of a string with another string.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POSITION</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POSITION(substring IN string [FROM start])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the position of the first occurrence of a substring.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ASCII</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ASCII(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the code point of the first character of a string.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REPEAT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REPEAT(string, count)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a string repeated the specified number of times.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SPACE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SPACE(count)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a string that contains the specified number of spaces.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>STRCMP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>STRCMP(string1, string2)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compares two strings and returns an integer comparison result.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SOUNDEX</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SOUNDEX(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the phonetic representation of a string.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DIFFERENCE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DIFFERENCE(string1, string2)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a similarity score for the <code>SOUNDEX</code> values of two strings.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REVERSE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REVERSE(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a string with characters in reverse order.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TRIM</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TRIM([{BOTH | LEADING | TRAILING} chars FROM] string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Removes characters from the start, end, or both ends of a string.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LTRIM</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LTRIM(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Removes spaces from the start of a string.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RTRIM</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RTRIM(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Removes spaces from the end of a string.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LIKE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string LIKE pattern [ESCAPE escapeChar]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks whether a string matches a SQL <code>LIKE</code> pattern.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SIMILAR TO</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string SIMILAR TO pattern [ESCAPE escapeChar]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks whether a string matches a SQL regular expression pattern.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<div class="sect3">
+<h4 id="regular-expression-functions-and-operators">Regular expression functions and operators</h4>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string ~ pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks whether a string matches a case-sensitive POSIX regular expression.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>~*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string ~* pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks whether a string matches a case-insensitive POSIX regular expression.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>!~</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string !~ pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks whether a string does not match a case-sensitive POSIX regular expression.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>!~*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string !~* pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks whether a string does not match a case-insensitive POSIX regular expression.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REGEXP_REPLACE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REGEXP_REPLACE(string, regexp, replacement[, position[, occurrence[, matchType]]])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Replaces substrings that match a regular expression.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REGEXP_SUBSTR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REGEXP_SUBSTR(string, regexp[, position[, occurrence]])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the substring that matches a regular expression.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="sect3">
+<h4 id="numeric-and-math-functions">Numeric and math functions</h4>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MOD</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MOD(numeric1, numeric2)</code> or <code>numeric1 % numeric2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the remainder after division.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BITAND</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BITAND(integer1, integer2)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the bitwise AND of two integer values.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BITOR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BITOR(integer1, integer2)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the bitwise OR of two integer values.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BITXOR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BITXOR(integer1, integer2)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the bitwise XOR of two integer values.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXP(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns Euler&#8217;s number raised to a power.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POWER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POWER(numeric1, numeric2)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns one numeric value raised to the power of another.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LN(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the natural logarithm.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOG10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOG10(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the base-10 logarithm.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ABS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ABS(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the absolute value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RAND</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RAND([seed])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a random double value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RAND_INTEGER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RAND_INTEGER([seed,] bound)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a random integer from <code>0</code> inclusive to <code>bound</code> exclusive.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ACOS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ACOS(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the arc cosine.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ACOSH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ACOSH(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the inverse hyperbolic cosine.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ASIN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ASIN(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the arc sine.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ASINH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ASINH(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the inverse hyperbolic sine.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ATAN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ATAN(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the arc tangent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ATANH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ATANH(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the inverse hyperbolic tangent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ATAN2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ATAN2(numeric1, numeric2)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the angle from rectangular coordinates.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQRT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SQRT(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the square root.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CBRT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CBRT(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the cube root.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COS(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the cosine.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COSH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COSH(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the hyperbolic cosine.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COT(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the cotangent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COTH(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the hyperbolic cotangent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DEGREES</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DEGREES(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts radians to degrees.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RADIANS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RADIANS(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts degrees to radians.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ROUND</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ROUND(numeric[, scale])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rounds a numeric value to the specified scale.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SIGN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SIGN(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the sign of a numeric value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SIN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SIN(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the sine.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SINH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SINH(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the hyperbolic sine.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TAN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TAN(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the tangent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TANH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TANH(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the hyperbolic tangent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SEC</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SEC(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the secant.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SECH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SECH(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the hyperbolic secant.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CSC</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CSC(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the cosecant.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CSCH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CSCH(numeric)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the hyperbolic cosecant.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TRUNCATE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TRUNCATE(numeric[, scale])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Truncates a numeric value to the specified scale.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PI</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PI</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns an approximation of pi.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="sect1">
-<h2 id="hints">Optimizer hints</h2>
-<div class="sectionbody">
+<div class="sect3">
+<h4 id="date-and-time-functions">Date and time functions</h4>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXTRACT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXTRACT(timeUnit FROM datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the specified field from a date, time, or timestamp value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FLOOR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FLOOR(datetime TO timeUnit)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rounds a date, time, or timestamp value down to the specified unit.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CEIL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CEIL(datetime TO timeUnit)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rounds a date, time, or timestamp value up to the specified unit.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TIMESTAMPADD</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TIMESTAMPADD(timeUnit, interval, datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adds an interval to a timestamp.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TIMESTAMPDIFF</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TIMESTAMPDIFF(timeUnit, datetime1, datetime2)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the number of time-unit boundaries between two datetime values.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LAST_DAY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LAST_DAY(date)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the date of the last day of the month.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DAYNAME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DAYNAME(datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the name of the day of the week.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MONTHNAME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MONTHNAME(datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the name of the month.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DAYOFMONTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DAYOFMONTH(datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the day of the month.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DAYOFWEEK</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DAYOFWEEK(datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the day of the week.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DAYOFYEAR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DAYOFYEAR(datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the day of the year.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>YEAR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>YEAR(datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the year.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>QUARTER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>QUARTER(datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the quarter of the year.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MONTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MONTH(datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the month number.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>WEEK</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>WEEK(datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the week number.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HOUR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HOUR(datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the hour.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MINUTE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MINUTE(datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the minute.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SECOND</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SECOND(datetime)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the second.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TIMESTAMP_SECONDS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TIMESTAMP_SECONDS(integer)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts seconds since <code>1970-01-01 00:00:00</code> to a timestamp.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TIMESTAMP_MILLIS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TIMESTAMP_MILLIS(integer)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts milliseconds since <code>1970-01-01 00:00:00</code> to a timestamp.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TIMESTAMP_MICROS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TIMESTAMP_MICROS(integer)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts microseconds since <code>1970-01-01 00:00:00</code> to a timestamp.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UNIX_SECONDS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UNIX_SECONDS(timestamp)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns seconds since <code>1970-01-01 00:00:00</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UNIX_MILLIS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UNIX_MILLIS(timestamp)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns milliseconds since <code>1970-01-01 00:00:00</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UNIX_MICROS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UNIX_MICROS(timestamp)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns microseconds since <code>1970-01-01 00:00:00</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UNIX_DATE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UNIX_DATE(date)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the number of days since <code>1970-01-01</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DATE_FROM_UNIX_DATE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DATE_FROM_UNIX_DATE(integer)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts days since <code>1970-01-01</code> to a date.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DATE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DATE(value)</code> or <code>DATE(year, month, day)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts a value to a date or creates a date from date fields.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TIME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TIME(value)</code> or <code>TIME(hour, minute, second)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts a value to a time or creates a time from time fields.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DATETIME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DATETIME(value)</code> or <code>DATETIME(year, month, day, hour, minute, second)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts a value to a timestamp or creates a timestamp from date and time fields.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CURRENT_TIME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CURRENT_TIME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the current time.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CURRENT_TIMESTAMP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CURRENT_TIMESTAMP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the current timestamp.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CURRENT_DATE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CURRENT_DATE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the current date.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOCALTIME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOCALTIME</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the current local time.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOCALTIMESTAMP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOCALTIMESTAMP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the current local timestamp.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JDBC current time escape functions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>{fn CURDATE()}</code>, <code>{fn CURTIME()}</code>, <code>{fn NOW()}</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JDBC escape aliases for the current date, current time, and current timestamp.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TO_CHAR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TO_CHAR(datetime, format)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Formats a date, time, or timestamp value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TO_DATE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TO_DATE(string, format)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parses a date from a string.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TO_TIMESTAMP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TO_TIMESTAMP(string, format)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parses a timestamp from a string.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="xml-functions">XML functions</h4>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXTRACTVALUE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXTRACTVALUE(xml, xpath)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the text selected by an XPath expression.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XMLTRANSFORM</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XMLTRANSFORM(xml, xslt)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Transforms XML with an XSLT stylesheet.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXTRACT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"EXTRACT"(xml, xpath)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the XML fragment selected by an XPath expression. Quote the name when needed to distinguish it from date/time <code>EXTRACT</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXISTSNODE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXISTSNODE(xml, xpath)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns <code>1</code> if an XPath expression selects at least one XML node; otherwise returns <code>0</code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="json-functions-and-predicates">JSON functions and predicates</h4>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FORMAT JSON</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value FORMAT JSON</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Marks a value as JSON-formatted input.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_VALUE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_VALUE(jsonValue, path)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extracts a scalar SQL value from JSON using a JSON path expression.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_QUERY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_QUERY(jsonValue, path)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extracts a JSON object or array from JSON using a JSON path expression.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_TYPE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_TYPE(jsonValue)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the type of a JSON value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_EXISTS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_EXISTS(jsonValue, path)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns whether JSON satisfies the specified path expression.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_DEPTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_DEPTH(jsonValue)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the depth of a JSON value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_KEYS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_KEYS(jsonValue[, path])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the keys from a JSON object.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_PRETTY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_PRETTY(jsonValue)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns formatted JSON.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_LENGTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_LENGTH(jsonValue[, path])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the length of a JSON value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_REMOVE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_REMOVE(jsonValue, path[, path]&#8230;&#8203;)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Removes data selected by path expressions and returns the updated JSON.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_STORAGE_SIZE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_STORAGE_SIZE(jsonValue)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the number of bytes used by the JSON binary representation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_OBJECT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_OBJECT(jsonKey : jsonValue[, jsonKey : jsonValue]&#8230;&#8203;)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds a JSON object from key-value pairs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_ARRAY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>JSON_ARRAY([jsonValue[, jsonValue]&#8230;&#8203;])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds a JSON array from values.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>IS JSON</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value IS [NOT] JSON [VALUE]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks whether a value is, or is not, JSON.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>IS JSON OBJECT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value IS [NOT] JSON OBJECT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks whether a value is, or is not, a JSON object.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>IS JSON ARRAY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value IS [NOT] JSON ARRAY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks whether a value is, or is not, a JSON array.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>IS JSON SCALAR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value IS [NOT] JSON SCALAR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks whether a value is, or is not, a JSON scalar value.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="collection-functions-and-operators">Collection functions and operators</h4>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ARRAY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ARRAY[value[, value]&#8230;&#8203;]</code> or <code>ARRAY(query)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Creates an array from values or from a query result.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MAP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MAP[key, value[, key, value]&#8230;&#8203;]</code> or <code>MAP(query)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Creates a map from key-value pairs or from a query result.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ITEM</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>array[index]</code> or <code>map[key]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns an item from an array or map.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CARDINALITY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CARDINALITY(collection)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the number of elements in a collection.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>IS EMPTY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection IS EMPTY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks whether a collection has no elements.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>IS NOT EMPTY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection IS NOT EMPTY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks whether a collection has at least one element.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="other-functions-and-operators">Other functions and operators</h4>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ROW</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ROW(value[, value]&#8230;&#8203;)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Creates a row value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CAST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CAST(value AS type)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts a value to the specified type.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Infix cast</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value::type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Converts a value to the specified type using PostgreSQL-style cast syntax.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TYPEOF</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TYPEOF(value)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the Ignite SQL type of a value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COALESCE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COALESCE(value, value[, value]&#8230;&#8203;)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the first non-null value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NVL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NVL(value1, value2)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns <code>value1</code> when it is not null; otherwise returns <code>value2</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NULLIF</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NULLIF(value1, value2)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns <code>NULL</code> when the values are equal; otherwise returns <code>value1</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CASE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CASE WHEN condition THEN result [ELSE result] END</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a result selected by conditional branches.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DECODE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DECODE(value, search, result[, search, result]&#8230;&#8203;[, default])</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compares a value with search values and returns the matching result.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LEAST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LEAST(value[, value]&#8230;&#8203;)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the least value from the arguments.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GREATEST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GREATEST(value[, value]&#8230;&#8203;)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the greatest value from the arguments.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COMPRESS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COMPRESS(string)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compresses a string and returns binary data.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>OCTET_LENGTH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>OCTET_LENGTH(binary)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the number of bytes in binary data.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>QUERY_ENGINE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>QUERY_ENGINE()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the name of the query engine used by the query.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SYSTEM_RANGE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TABLE(SYSTEM_RANGE(start, end[, increment]))</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a table with one <code>BIGINT</code> column named <code>X</code> and one row for each value in the range.</p>
+<p class="tableblock">=== Supported Data Types</p>
+<p class="tableblock">Below are the data types supported by the Calcite-based SQL engine:</p>
+<p class="tableblock">[cols="1,1",opts="stretch,header"]</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
-<p>The query optimizer does its best to build the fastest excution plan. However, this is a far way to create an optimizer
+<p>|Data type | Mapped to Java class</p>
+</div>
+<div class="paragraph">
+<p>|BOOLEAN
+|<code>java.lang.Boolean</code></p>
+</div>
+<div class="paragraph">
+<p>|DECIMAL
+|<code>java.math.BigDecimal</code></p>
+</div>
+<div class="paragraph">
+<p>|DOUBLE
+|<code>java.lang.Double</code></p>
+</div>
+<div class="paragraph">
+<p>|REAL/FLOAT
+|<code>java.lang.Float</code></p>
+</div>
+<div class="paragraph">
+<p>|INT
+|<code>java.lang.Integer</code></p>
+</div>
+<div class="paragraph">
+<p>|BIGINT
+|<code>java.lang.Long</code></p>
+</div>
+<div class="paragraph">
+<p>|SMALLINT
+|<code>java.lang.Short</code></p>
+</div>
+<div class="paragraph">
+<p>|TINYINT
+|<code>java.lang.Byte</code></p>
+</div>
+<div class="paragraph">
+<p>|CHAR/VARCHAR
+|<code>java.lang.String</code></p>
+</div>
+<div class="paragraph">
+<p>|DATE
+|<code>java.sql.Date</code></p>
+</div>
+<div class="paragraph">
+<p>|TIME
+|<code>java.sql.Time</code></p>
+</div>
+<div class="paragraph">
+<p>|TIMESTAMP
+|<code>java.sql.Timestamp</code></p>
+</div>
+<div class="paragraph">
+<p>|INTERVAL YEAR TO MONTH
+|<code>java.time.Period</code></p>
+</div>
+<div class="paragraph">
+<p>|INTERVAL DAY TO SECOND
+|<code>java.time.Duration</code></p>
+</div>
+<div class="paragraph">
+<p>|BINARY/VARBINARY
+|<code>byte[]</code></p>
+</div>
+<div class="paragraph">
+<p>|UUID
+|<code>java.util.UUID</code></p>
+</div>
+<div class="paragraph">
+<p>|OTHER
+|<code>java.lang.Object</code></p>
+</div>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">== Optimizer hints <a id="hints"></a></p>
+<p class="tableblock">The query optimizer does its best to build the fastest excution plan. However, this is a far way to create an optimizer
 which is the most effective for each case. You can better know about the data design, application design or data
 distribution in the cluster. SQL hints can help the optimizer to make optimizations more rationally or build
 execution plan faster.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>SQL hints are optional to apply and might be skipped in some cases.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="sect2">
-<h3 id="hints-format">Hints format</h3>
-<div class="paragraph">
-<p>SQL hints are defined by a special comment /*+ HINT */ reffered as <em>hint block</em>. Spaces before and after the
+<p class="tableblock">[NOTE]
+====
+SQL hints are optional to apply and might be skipped in some cases.
+====</p>
+<p class="tableblock">=== Hints format
+SQL hints are defined by a special comment /*+ HINT */ reffered as <em>hint block</em>. Spaces before and after the
 hint name are required. The hint block is placed right after <em>SELECT</em> or after a table name. Several hint blocks for
 one <em>SELECT</em> or one table <strong>are not allowed</strong>. Several hints in one hint block are separated with comma.</p>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ FORCE_INDEX(IDX_TBL1_V2), EXPAND_DISTINCT_AGG */ V2, AVG(DISTINCT V3) FROM TBL1 WHERE V1=? and V2=? GROUP BY V2
-
-SELECT * FROM TBL1 /*+ FORCE_INDEX(IDX_TBL1_V2) */ where V1=? and V2=?</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It is allowed to define several hints for the same relation operator. To use several hints, separate them by comma
+<p class="tableblock">Example:
+[source, SQL]
+----
+SELECT /<strong>+ FORCE_INDEX(IDX_TBL1_V2), EXPAND_DISTINCT_AGG */ V2, AVG(DISTINCT V3) FROM TBL1 WHERE V1=? and V2=? GROUP BY V2</p>
+<p class="tableblock">SELECT * FROM TBL1 /</strong>+ FORCE_INDEX(IDX_TBL1_V2) <strong>/ where V1=? and V2=?
+----</p>
+<p class="tableblock">It is allowed to define several hints for the same relation operator. To use several hints, separate them by comma
 (spaces are optional).</p>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ NO_INDEX, EXPAND_DISTINCT_AGG */ SUM(DISTINCT V1), AVG(DISTINCT V2) FROM TBL1 WHERE V3=? GROUP BY V3</code></pre>
-</div>
-</div>
-<div class="sect3">
-<h4 id="hint-parameters">Hint parameters</h4>
-<div class="paragraph">
-<p>Hint parameters, if required, are placed in brackets after the hint name and separated by commas.</p>
-</div>
-<div class="paragraph">
-<p>The hint parameter can be quoted. Quoted parameter is case-sensitive. The quoted and unquoted parameters cannot be
+<p class="tableblock">Example:
+[source, SQL]
+----
+SELECT /</strong>+ NO_INDEX, EXPAND_DISTINCT_AGG <strong>/ SUM(DISTINCT V1), AVG(DISTINCT V2) FROM TBL1 WHERE V3=? GROUP BY V3
+----</p>
+<p class="tableblock">==== Hint parameters
+Hint parameters, if required, are placed in brackets after the hint name and separated by commas.</p>
+<p class="tableblock">The hint parameter can be quoted. Quoted parameter is case-sensitive. The quoted and unquoted parameters cannot be
 defined for the same hint.</p>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ FORCE_INDEX(TBL1_IDX2,TBL2_IDX1) */ T1.V1, T2.V1 FROM TBL1 T1, TBL2 T2 WHERE T1.V1 = T2.V1 AND T1.V2 &gt; ? AND T2.V2 &gt; ?;
-
-SELECT /*+ FORCE_INDEX('TBL2_idx1') */ T1.V1, T2.V1 FROM TBL1 T1, TBL2 T2 WHERE T1.V1 = T2.V1 AND T1.V2 &gt; ? AND T2.V2 &gt; ?;</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="hint-scope">Hint scope</h3>
-<div class="paragraph">
-<p>Hints of a <em>SELECT</em> are "visible" for this operation and the following relation operators, queries and subqueries.
+<p class="tableblock">Example:
+[source, SQL]
+----
+SELECT /</strong>+ FORCE_INDEX(TBL1_IDX2,TBL2_IDX1) <strong>/ T1.V1, T2.V1 FROM TBL1 T1, TBL2 T2 WHERE T1.V1 = T2.V1 AND T1.V2 &gt; ? AND T2.V2 &gt; ?;</p>
+<p class="tableblock">SELECT /</strong>+ FORCE_INDEX('TBL2_idx1') <strong>/ T1.V1, T2.V1 FROM TBL1 T1, TBL2 T2 WHERE T1.V1 = T2.V1 AND T1.V2 &gt; ? AND T2.V2 &gt; ?;
+----</p>
+<p class="tableblock">=== Hint scope
+Hints of a <em>SELECT</em> are "visible" for this operation and the following relation operators, queries and subqueries.
 Hints in a subquery have effective scope only for this subquery and its subqueries. Hint, defined for a table, is
 effective only for this table.</p>
-</div>
-<div class="paragraph">
-<p>Example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ NO_INDEX(TBL1_IDX2), FORCE_INDEX(TBL2_IDX2) */ T1.V1 FROM TBL1 T1 WHERE T1.V2 IN (SELECT T2.V2 FROM TBL2 T2 WHERE T2.V1=? AND T2.V2=?);
-
-SELECT T1.V1 FROM TBL1 T1 WHERE T1.V2 IN (SELECT /*+ FORCE_INDEX(TBL2_IDX2) */ T2.V2 FROM TBL2 T2 WHERE T2.V1=? AND T2.V2=?);
-
-SELECT T1.V1 FROM TBL1 T1 JOIN TBL2 /*+ MERGE_JOIN */ T2 ON T1.V2=T2.V2 and T1.V3=T2.V3 and T2.V3=?;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Note that only the first query has a hint in such a case as:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ FORCE_INDEX */ V1 FROM TBL1 WHERE V1=? AND V2=?
+<p class="tableblock">Example:
+[source, SQL]
+----
+SELECT /</strong>+ NO_INDEX(TBL1_IDX2), FORCE_INDEX(TBL2_IDX2) <strong>/ T1.V1 FROM TBL1 T1 WHERE T1.V2 IN (SELECT T2.V2 FROM TBL2 T2 WHERE T2.V1=? AND T2.V2=?);</p>
+<p class="tableblock">SELECT T1.V1 FROM TBL1 T1 WHERE T1.V2 IN (SELECT /</strong>+ FORCE_INDEX(TBL2_IDX2) <strong>/ T2.V2 FROM TBL2 T2 WHERE T2.V1=? AND T2.V2=?);</p>
+<p class="tableblock">SELECT T1.V1 FROM TBL1 T1 JOIN TBL2 /</strong>+ MERGE_JOIN <strong>/ T2 ON T1.V2=T2.V2 and T1.V3=T2.V3 and T2.V3=?;
+----
+Note that only the first query has a hint in such a case as:
+[source, SQL]
+----
+SELECT /</strong>+ FORCE_INDEX <strong>/ V1 FROM TBL1 WHERE V1=? AND V2=?
 UNION ALL
-SELECT V1 FROM TBL1 WHERE V3&gt;?</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>But <strong>there are exceptions</strong>: hints of engine or optimizer level, such as <a href="#hint_disable_rule"><em>DISABLE_RULE</em></a> or
+SELECT V1 FROM TBL1 WHERE V3&gt;?
+----
+But *there are exceptions</strong>: hints of engine or optimizer level, such as <a href="#hint_disable_rule"><em>DISABLE_RULE</em></a> or
 <a href="#hint_query_engine"><em>QUERY_ENGINE</em></a>. Such hints should be defined at the beginning of the query and are related to
 the whole query.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="hints-priority">Hints priority</h3>
-<div class="paragraph">
-<p>Hints, defined in subqueries or in the following <em>SELECTs</em>, have priority over the preceding ones. In the following example,
-an index for <em>TBL2</em> is actually applied.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ NO_INDEX */ * FROM TBL1 T1 WHERE T1.V1 = (SELECT /*+ FORCE_INDEX */ T2.V1 FROM TBL2 T2 where T2.V2=? and T2.V3=?)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Table hints usually have a bigger priority. In the following example, an index for <em>TBL1</em> is actually applied.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ NO_INDEX */ * FROM TBL /*+ FORCE_INDEX(IDX_TBL1_V2) */ where V1=? and V2=? and V3=?;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="hints-errors">Hints errors</h3>
-<div class="paragraph">
-<p>The optimizer tries to apply every hint and its parameters, if possible. But it skips the hint or hint parameter if:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>There is no such supported hint.</p>
-</li>
-<li>
-<p>Required hint parameters are not passed.</p>
-</li>
-<li>
-<p>The hint parameters have been passed, but the hint does not support any parameter.</p>
-</li>
-<li>
-<p>The hint parameter is incorrect or refers to a nonexistent object, such as a nonexistent index or table.</p>
-</li>
-<li>
-<p>The current hints or current parameters are incompatible with the previous ones, such as forcing the use and disabling of the same index.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="hint-limitations">Hint limitations</h3>
-<div class="paragraph">
-<p>Currently, SQL hints do not recognize the aliases. You can&#8217;t refer to an alias like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ MERGE_JOIN(T2) */ T2.V1 FROM TBL1 T1 JOIN TBL2 T2 ON T1.V3=T2.V1 WHERE T1.V2=? AND T2.V2=?</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Instead, a table name have to be used:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ MERGE_JOIN(TBL2) */ T2.V1 FROM TBL1 T1 JOIN TBL2 T2 ON T1.V3=T2.V1 WHERE T1.V2=? AND T2.V2=?</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="supportted-hints">Supportted hints</h3>
-<div class="sect3">
-<h4 id="force_index-no_index">FORCE_INDEX / NO_INDEX</h4>
-<div class="paragraph">
-<p>Forces or disables index scan.</p>
-</div>
-<div class="sect4">
-<h5 id="parameters">Parameters:</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Empty. To force an index scan for every undelying table. Optimizer will choose any available index. Or to disable all indexes.</p>
-</li>
-<li>
-<p>Single index name to use or skip exactly this index.</p>
-</li>
-<li>
-<p>Several index names. They can relate to different tables. The optimizer will choose indexes for scanning or skip them all.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="example">Example:</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ FORCE_INDEX */ T1.* FROM TBL1 T1 WHERE T1.V1 = T2.V1 AND T1.V2 &gt; ?;
-
-SELECT /*+ FORCE_INDEX(TBL1_IDX2, TBL2_IDX1) */ T1.V1, T2.V1 FROM TBL1 T1, TBL2 T2 WHERE T1.V1 = T2.V1 AND T1.V2 &gt; ? AND T2.V2 &gt; ?;
-
-SELECT /*+ NO_INDEX */ T1.* FROM TBL1 T1 WHERE T1.V1 = T2.V1 AND T1.V2 &gt; ?;
-
-SELECT /*+ NO_INDEX(TBL1_IDX2, TBL2_IDX1) */ T1.V1, T2.V1 FROM TBL1 T1, TBL2 T2 WHERE T1.V1 = T2.V1 AND T1.V2 &gt; ? AND T2.V2 &gt; ?;
-
-SELECT T1.V1, T2.V2 FROM TBL1 t1 JOIN TBL2 /*+ FORCE_INDEX(IDX2_2) */ T2 on T1.V3=T2.V3 and T1.V1=T2.V2 and T2.V1=?";</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="enforce_join_order">ENFORCE_JOIN_ORDER</h4>
-<div class="paragraph">
-<p>Forces join order as appears in a query. Fastens building of joins plan.</p>
-</div>
-<div class="sect4">
-<h5 id="example-2">Example:</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ ENFORCE_JOIN_ORDER */ T1.V1, T2.V1, T2.V2, T3.V1, T3.V2, T3.V3 FROM TBL1 T1 JOIN TBL2 T2 ON T1.V3=T2.V1 JOIN TBL3 T3 ON T2.V3=T3.V1 AND T2.V2=T3.V2
-
-SELECT t1.v1, t3.v2 FROM TBL1 t1 JOIN TBL3 t3 on t1.v3=t3.v3 WHERE t1.v2 in (SELECT /*+ ENFORCE_JOIN_ORDER */ t2.v2 FROM TBL2 t2 JOIN TBL3 t3 ON t2.v1=t3.v1)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="merge_join-nl_join-cnl_join-hash_join">MERGE_JOIN, NL_JOIN, CNL_JOIN, HASH_JOIN</h4>
-<div class="paragraph">
-<p>Forces certain join type: Merge, Nested Loop, Correlated Nested Loop and Hash Join respectively.</p>
-</div>
-<div class="paragraph">
-<p>Every of those has the negation like 'NO_INDEX': CNL_JOIN, NO_CNL_JOIN, NO_HASH_JOIN. The negation hint disables certain join type.</p>
-</div>
-<div class="sect4">
-<h5 id="parameters-2">Parameters:</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Empty. To force or disable certain join type for every join.</p>
-</li>
-<li>
-<p>Single or several tables names force or disable certain join type only for joining of these tables.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="example-3">Example:</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ MERGE_JOIN */ t1.v1, t2.v2 FROM TBL1 t1, TBL2 t2 WHERE t1.v3=t2.v3
-
-SELECT /*+ NL_JOIN(TBL3,TBL1) */ t4.v1, t2.v2 FROM TBL1 t4 JOIN TBL2 t2 on t1.v3=t2.v3 WHERE t2.v1 in (SELECT t3.v3 FROM TBL3 t3 JOIN TBL1 t4 on t3.v2=t4.v2)
-
-SELECT t1.v1, t2.v2 FROM TBL2 t1 JOIN TBL1 t2 on t1.v3=t2.v3 WHERE t2.v3 in (SELECT /*+ NO_CNL_JOIN(TBL4) */ t3.v3 FROM TBL3 t3 JOIN TBL4 t4 on t3.v1=t4.v1)
-
-SELECT t4.v1, t2.v2 FROM TBL1 t4 JOIN TBL2 t2 on t1.v3=t2.v3 WHERE t2.v1 in (SELECT t3.v3 FROM TBL3 t3 JOIN TBL1 /*+ HASH_JOIN */ t4 on t3.v2=t4.v2)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="expand_distinct_agg">EXPAND_DISTINCT_AGG</h4>
-<div class="paragraph">
-<p>If the optimizer wraps aggregation operations with a join, forces expanding of only distinct aggregates to the join.
+<p class="tableblock">=== Hints priority
+Hints, defined in subqueries or in the following <em>SELECTs</em>, have priority over the preceding ones. In the following example,
+an index for <em>TBL2</em> is actually applied.
+[source, SQL]
+----
+SELECT /<strong>+ NO_INDEX */ * FROM TBL1 T1 WHERE T1.V1 = (SELECT /</strong>+ FORCE_INDEX <strong>/ T2.V1 FROM TBL2 T2 where T2.V2=? and T2.V3=?)
+----
+Table hints usually have a bigger priority. In the following example, an index for <em>TBL1</em> is actually applied.
+[source, SQL]
+----
+SELECT /</strong>+ NO_INDEX <strong>/ * FROM TBL /</strong>+ FORCE_INDEX(IDX_TBL1_V2) <strong>/ where V1=? and V2=? and V3=?;
+----</p>
+<p class="tableblock">=== Hints errors
+The optimizer tries to apply every hint and its parameters, if possible. But it skips the hint or hint parameter if:</p>
+<p class="tableblock">* There is no such supported hint.
+* Required hint parameters are not passed.
+* The hint parameters have been passed, but the hint does not support any parameter.
+* The hint parameter is incorrect or refers to a nonexistent object, such as a nonexistent index or table.
+* The current hints or current parameters are incompatible with the previous ones, such as forcing the use and disabling of the same index.</p>
+<p class="tableblock">=== Hint limitations
+Currently, SQL hints do not recognize the aliases. You can&#8217;t refer to an alias like this:
+[source, SQL]
+----
+SELECT /</strong>+ MERGE_JOIN(T2) <strong>/ T2.V1 FROM TBL1 T1 JOIN TBL2 T2 ON T1.V3=T2.V1 WHERE T1.V2=? AND T2.V2=?
+----
+Instead, a table name have to be used:
+[source, SQL]
+----
+SELECT /</strong>+ MERGE_JOIN(TBL2) <strong>/ T2.V1 FROM TBL1 T1 JOIN TBL2 T2 ON T1.V3=T2.V1 WHERE T1.V2=? AND T2.V2=?
+----</p>
+<p class="tableblock">=== Supportted hints</p>
+<p class="tableblock">==== FORCE_INDEX / NO_INDEX
+Forces or disables index scan.</p>
+<p class="tableblock">===== Parameters:
+* Empty. To force an index scan for every undelying table. Optimizer will choose any available index. Or to disable all indexes.
+* Single index name to use or skip exactly this index.
+* Several index names. They can relate to different tables. The optimizer will choose indexes for scanning or skip them all.</p>
+<p class="tableblock">===== Example:
+[source, SQL]
+----
+SELECT /</strong>+ FORCE_INDEX <strong>/ T1.</strong> FROM TBL1 T1 WHERE T1.V1 = T2.V1 AND T1.V2 &gt; ?;</p>
+<p class="tableblock">SELECT /<strong>+ FORCE_INDEX(TBL1_IDX2, TBL2_IDX1) */ T1.V1, T2.V1 FROM TBL1 T1, TBL2 T2 WHERE T1.V1 = T2.V1 AND T1.V2 &gt; ? AND T2.V2 &gt; ?;</p>
+<p class="tableblock">SELECT /</strong>+ NO_INDEX <strong>/ T1.</strong> FROM TBL1 T1 WHERE T1.V1 = T2.V1 AND T1.V2 &gt; ?;</p>
+<p class="tableblock">SELECT /<strong>+ NO_INDEX(TBL1_IDX2, TBL2_IDX1) */ T1.V1, T2.V1 FROM TBL1 T1, TBL2 T2 WHERE T1.V1 = T2.V1 AND T1.V2 &gt; ? AND T2.V2 &gt; ?;</p>
+<p class="tableblock">SELECT T1.V1, T2.V2 FROM TBL1 t1 JOIN TBL2 /</strong>+ FORCE_INDEX(IDX2_2) <strong>/ T2 on T1.V3=T2.V3 and T1.V1=T2.V2 and T2.V1=?";
+----</p>
+<p class="tableblock">==== ENFORCE_JOIN_ORDER
+Forces join order as appears in a query. Fastens building of joins plan.</p>
+<p class="tableblock">===== Example:
+[source, SQL]
+----
+SELECT /</strong>+ ENFORCE_JOIN_ORDER <strong>/ T1.V1, T2.V1, T2.V2, T3.V1, T3.V2, T3.V3 FROM TBL1 T1 JOIN TBL2 T2 ON T1.V3=T2.V1 JOIN TBL3 T3 ON T2.V3=T3.V1 AND T2.V2=T3.V2</p>
+<p class="tableblock">SELECT t1.v1, t3.v2 FROM TBL1 t1 JOIN TBL3 t3 on t1.v3=t3.v3 WHERE t1.v2 in (SELECT /</strong>+ ENFORCE_JOIN_ORDER <strong>/ t2.v2 FROM TBL2 t2 JOIN TBL3 t3 ON t2.v1=t3.v1)
+----</p>
+<p class="tableblock">==== MERGE_JOIN, NL_JOIN, CNL_JOIN, HASH_JOIN
+Forces certain join type: Merge, Nested Loop, Correlated Nested Loop and Hash Join respectively.</p>
+<p class="tableblock">Every of those has the negation like 'NO_INDEX': CNL_JOIN, NO_CNL_JOIN, NO_HASH_JOIN. The negation hint disables certain join type.</p>
+<p class="tableblock">===== Parameters:
+* Empty. To force or disable certain join type for every join.
+* Single or several tables names force or disable certain join type only for joining of these tables.</p>
+<p class="tableblock">===== Example:
+[source, SQL]
+----
+SELECT /</strong>+ MERGE_JOIN <strong>/ t1.v1, t2.v2 FROM TBL1 t1, TBL2 t2 WHERE t1.v3=t2.v3</p>
+<p class="tableblock">SELECT /</strong>+ NL_JOIN(TBL3,TBL1) <strong>/ t4.v1, t2.v2 FROM TBL1 t4 JOIN TBL2 t2 on t1.v3=t2.v3 WHERE t2.v1 in (SELECT t3.v3 FROM TBL3 t3 JOIN TBL1 t4 on t3.v2=t4.v2)</p>
+<p class="tableblock">SELECT t1.v1, t2.v2 FROM TBL2 t1 JOIN TBL1 t2 on t1.v3=t2.v3 WHERE t2.v3 in (SELECT /</strong>+ NO_CNL_JOIN(TBL4) <strong>/ t3.v3 FROM TBL3 t3 JOIN TBL4 t4 on t3.v1=t4.v1)</p>
+<p class="tableblock">SELECT t4.v1, t2.v2 FROM TBL1 t4 JOIN TBL2 t2 on t1.v3=t2.v3 WHERE t2.v1 in (SELECT t3.v3 FROM TBL3 t3 JOIN TBL1 /</strong>+ HASH_JOIN <strong>/ t4 on t3.v2=t4.v2)
+----</p>
+<p class="tableblock">==== EXPAND_DISTINCT_AGG
+If the optimizer wraps aggregation operations with a join, forces expanding of only distinct aggregates to the join.
 Removes duplicates before the joining and speeds up it.</p>
-</div>
-<div class="sect4">
-<h5 id="example-4">Example:</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ EXPAND_DISTINCT_AGG */ SUM(DISTINCT V1), AVG(DISTINCT V2) FROM TBL1 GROUP BY V3</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="hint_query_engine">QUERY_ENGINE</h4>
-<div class="paragraph">
-<p>Selects a particular engine to run individual queries. This is an engine level hint.</p>
-</div>
-<div class="sect4">
-<h5 id="parameters-3">Parameters:</h5>
-<div class="paragraph">
-<p>Single parameter required: the engine name.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="example-5">Example:</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ QUERY_ENGINE('calcite') */ V1 FROM TBL1</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="hint_disable_rule">DISABLE_RULE</h4>
-<div class="paragraph">
-<p>Disables certain optimizer rules. This is an optimizer level hint.</p>
-</div>
-<div class="sect4">
-<h5 id="parameters-4">Parameters:</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>One or more optimizer rules for skipping.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="example-6">Example:</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="SQL">SELECT /*+ DISABLE_RULE('MergeJoinConverter') */ T1.* FROM TBL1 T1 JOIN TBL2 T2 ON T1.V1=T2.V1 WHERE T2.V2=?</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="transaction-aware-queries">Transaction-aware Queries</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Calcite-based query engine supports SQL transactions with READ_COMMITTED isolation.
+<p class="tableblock">===== Example:
+[source, SQL]
+----
+SELECT /</strong>+ EXPAND_DISTINCT_AGG <strong>/ SUM(DISTINCT V1), AVG(DISTINCT V2) FROM TBL1 GROUP BY V3
+----</p>
+<p class="tableblock">==== QUERY_ENGINE <a id="hint_query_engine"></a>
+Selects a particular engine to run individual queries. This is an engine level hint.</p>
+<p class="tableblock">===== Parameters:
+Single parameter required: the engine name.</p>
+<p class="tableblock">===== Example:
+[source, SQL]
+----
+SELECT /</strong>+ QUERY_ENGINE('calcite') <strong>/ V1 FROM TBL1
+----</p>
+<p class="tableblock">==== DISABLE_RULE <a id="hint_disable_rule"></a>
+Disables certain optimizer rules. This is an optimizer level hint.</p>
+<p class="tableblock">===== Parameters:
+* One or more optimizer rules for skipping.</p>
+<p class="tableblock">===== Example:
+[source, SQL]
+----
+SELECT /</strong>+ DISABLE_RULE('MergeJoinConverter') <strong>/ T1.</strong> FROM TBL1 T1 JOIN TBL2 T2 ON T1.V1=T2.V1 WHERE T2.V2=?
+----</p>
+<p class="tableblock">== Transaction-aware Queries <a id="transaction-aware-queries"></a></p>
+<p class="tableblock">The Calcite-based query engine supports SQL transactions with READ_COMMITTED isolation.
 To ensure backward compatibility, transaction support is disabled by default. To enable it, use the following configuration:</p>
-</div>
-<code-tabs><code-tab data-tab='XML'><div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"org.apache.ignite.configuration.IgniteConfiguration"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"transactionConfiguration"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"org.apache.ignite.configuration.TransactionConfiguration"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"txAwareQueriesEnabled"</span> <span class="na">value=</span><span class="s">"true"</span> <span class="nt">/&gt;</span>
-            ...
-        <span class="nt">&lt;/bean&gt;</span>
-    <span class="nt">&lt;/property&gt;</span>
-    ...
-<span class="nt">&lt;/bean&gt;</span></code></pre>
-</div>
-</div></code-tab><code-tab data-tab='Java'><div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nc">IgniteConfiguration</span> <span class="n">cfg</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">IgniteConfiguration</span><span class="o">();</span>
-<span class="n">cfg</span><span class="o">.</span><span class="na">getTransactionConfiguration</span><span class="o">().</span><span class="na">setTxAwareQueriesEnabled</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span></code></pre>
-</div>
-</div></code-tab></code-tabs>
-<div class="paragraph">
-<p>The following API "transactional aware":</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>key-value API.</p>
-</li>
-<li>
-<p>SQL queries with Calcite engine.</p>
-</li>
-<li>
-<p>Scan queries.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>"Transactional aware" means:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>ACID in the same way as key-value API.</p>
-</li>
-<li>
-<p>Any data modified or deleted within a transaction will not be visible to concurrent transactions until it is committed.</p>
-</li>
-<li>
-<p>Any data modified by a query will be returned with updated values by subsequent queries within the same transaction.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>So, when <code>txAwareQueriesEnabled = true</code> enabled the usage:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>INSERT, UPDATE, DELETE statements with regular transaction guarantees.</p>
-</li>
-<li>
-<p>Mix key-value, SQL and Scan queries to process same dataset.</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<h3 id="select-for-update" class="discrete">SELECT &#8230;&#8203; FOR UPDATE</h3>
-<div class="paragraph">
-<p>Currently, no locks are held by the UPDATE or SELECT statements.
+<p class="tableblock">[tabs]&#8201;&#8212;&#8201;tab:XML[]
+[source,xml]
+----
+&lt;bean class="org.apache.ignite.configuration.IgniteConfiguration"&gt;
+    &lt;property name="transactionConfiguration"&gt;
+        &lt;bean class="org.apache.ignite.configuration.TransactionConfiguration"&gt;
+            &lt;property name="txAwareQueriesEnabled" value="true" /&gt;
+            &#8230;&#8203;
+        &lt;/bean&gt;
+    &lt;/property&gt;
+    &#8230;&#8203;
+&lt;/bean&gt;
+----
+tab:Java[]
+[source,java]
+----
+IgniteConfiguration cfg = new IgniteConfiguration();
+cfg.getTransactionConfiguration().setTxAwareQueriesEnabled(true);
+----&#8201;&#8212;&#8201;
+The following API "transactional aware":</p>
+<p class="tableblock">* key-value API.
+* SQL queries with Calcite engine.
+* Scan queries.</p>
+<p class="tableblock">"Transactional aware" means:</p>
+<p class="tableblock">1. ACID in the same way as key-value API.
+2. Any data modified or deleted within a transaction will not be visible to concurrent transactions until it is committed.
+3. Any data modified by a query will be returned with updated values by subsequent queries within the same transaction.</p>
+<p class="tableblock">So, when <code>txAwareQueriesEnabled = true</code> enabled the usage:</p>
+<p class="tableblock">* INSERT, UPDATE, DELETE statements with regular transaction guarantees.
+* Mix key-value, SQL and Scan queries to process same dataset.</p>
+<p class="tableblock">[NOTE]
+====
+[discrete]
+=== SELECT &#8230;&#8203; FOR UPDATE
+Currently, no locks are held by the UPDATE or SELECT statements.
 <code>SELECT &#8230;&#8203; FOR UPDATE</code> statement not supported.
 This means lost updates can occur when multiple transactions concurrently modify the same key.</p>
-</div>
-<div class="paragraph">
-<p>For example, if you execute a query like <code>SET salary = salary + 50 WHERE id = 1</code> concurrently across multiple threads,
-note that due to the lost-update anomaly, the final value may not equal the original salary plus 50 multiplied by the number of threads.</p>
-</div>
-</td>
+<p class="tableblock">For example, if you execute a query like <code>SET salary = salary + 50 WHERE id = 1</code> concurrently across multiple threads,
+note that due to the lost-update anomaly, the final value may not equal the original salary plus 50 multiplied by the number of threads.
+====</p></td>
 </tr>
+</tbody>
 </table>
+</div>
 </div>
 </div>
 </div>
@@ -4169,62 +4930,21 @@ Apache, Apache Ignite, the Apache feather and the Apache Ignite logo are either 
 <ul class="sectlevel2">
 <li><a href="#ddl">DDL</a></li>
 <li><a href="#dml">DML</a></li>
-<li><a href="#supported-functions">Supported Functions</a></li>
-<li><a href="#supported-data-types">Supported Data Types</a></li>
-</ul>
-</li>
-<li><a href="#hints">Optimizer hints</a>
-<ul class="sectlevel2">
-<li><a href="#hints-format">Hints format</a>
+<li><a href="#supported-functions">Supported Functions</a>
 <ul class="sectlevel3">
-<li><a href="#hint-parameters">Hint parameters</a></li>
-</ul>
-</li>
-<li><a href="#hint-scope">Hint scope</a></li>
-<li><a href="#hints-priority">Hints priority</a></li>
-<li><a href="#hints-errors">Hints errors</a></li>
-<li><a href="#hint-limitations">Hint limitations</a></li>
-<li><a href="#supportted-hints">Supportted hints</a>
-<ul class="sectlevel3">
-<li><a href="#force_index-no_index">FORCE_INDEX / NO_INDEX</a>
-<ul class="sectlevel4">
-<li><a href="#parameters">Parameters:</a></li>
-<li><a href="#example">Example:</a></li>
-</ul>
-</li>
-<li><a href="#enforce_join_order">ENFORCE_JOIN_ORDER</a>
-<ul class="sectlevel4">
-<li><a href="#example-2">Example:</a></li>
-</ul>
-</li>
-<li><a href="#merge_join-nl_join-cnl_join-hash_join">MERGE_JOIN, NL_JOIN, CNL_JOIN, HASH_JOIN</a>
-<ul class="sectlevel4">
-<li><a href="#parameters-2">Parameters:</a></li>
-<li><a href="#example-3">Example:</a></li>
-</ul>
-</li>
-<li><a href="#expand_distinct_agg">EXPAND_DISTINCT_AGG</a>
-<ul class="sectlevel4">
-<li><a href="#example-4">Example:</a></li>
-</ul>
-</li>
-<li><a href="#hint_query_engine">QUERY_ENGINE</a>
-<ul class="sectlevel4">
-<li><a href="#parameters-3">Parameters:</a></li>
-<li><a href="#example-5">Example:</a></li>
-</ul>
-</li>
-<li><a href="#hint_disable_rule">DISABLE_RULE</a>
-<ul class="sectlevel4">
-<li><a href="#parameters-4">Parameters:</a></li>
-<li><a href="#example-6">Example:</a></li>
+<li><a href="#aggregate-functions">Aggregate functions</a></li>
+<li><a href="#string-functions-and-predicates">String functions and predicates</a></li>
+<li><a href="#regular-expression-functions-and-operators">Regular expression functions and operators</a></li>
+<li><a href="#numeric-and-math-functions">Numeric and math functions</a></li>
+<li><a href="#date-and-time-functions">Date and time functions</a></li>
+<li><a href="#xml-functions">XML functions</a></li>
+<li><a href="#json-functions-and-predicates">JSON functions and predicates</a></li>
+<li><a href="#collection-functions-and-operators">Collection functions and operators</a></li>
+<li><a href="#other-functions-and-operators">Other functions and operators</a></li>
 </ul>
 </li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#transaction-aware-queries">Transaction-aware Queries</a></li>
 </ul>
     </div>
           
@@ -4248,13 +4968,13 @@ Apache, Apache Ignite, the Apache feather and the Apache Ignite logo are either 
     };
     </script>
 
-<script type='module' src='/assets/js/index.js?1778843397' async crossorigin></script>
-<script type='module' src='/assets/js/versioning.js?1778843397' async crossorigin></script>
-<script type='module' src='/assets/js/railroad-diagram.js?1778843397' async></script>
-<script type='module' src='/assets/js/search.js?1778843397' defer crossorigin></script>
+<script type='module' src='/assets/js/index.js?1779862237' async crossorigin></script>
+<script type='module' src='/assets/js/versioning.js?1779862237' async crossorigin></script>
+<script type='module' src='/assets/js/railroad-diagram.js?1779862237' async></script>
+<script type='module' src='/assets/js/search.js?1779862237' defer crossorigin></script>
 
-<link rel="stylesheet" href="/assets/css/styles.css?1778843397" media="print" onload="this.media='all'">
-<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1778843397"></noscript>
+<link rel="stylesheet" href="/assets/css/styles.css?1779862237" media="print" onload="this.media='all'">
+<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1779862237"></noscript>
 
 <link rel="stylesheet" href="/assets/css/docsearch.min.css" media="print" onload="this.media='all'">
 <noscript><link media="all" rel="stylesheet" href="/assets/css/docsearch.min.css"></noscript>
