@@ -3440,6 +3440,27 @@ If you don&#8217;t use data regions, you have to explicitly add default data reg
 <p>By default, eviction starts when the overall RAM consumption by a region gets to 90%.
 Use the <code>DataRegionConfiguration.setEvictionThreshold(&#8230;&#8203;)</code> parameter if you need to initiate eviction earlier or later.</p>
 </div>
+<div class="sect2">
+<h3 id="monitoring-page-eviction">Monitoring Page Eviction</h3>
+<div class="paragraph">
+<p>When page eviction starts due to a data region being under memory pressure, Ignite sets the <code>EvictionsStarted</code> metric to <code>true</code> for that data region.
+This metric is relevant for in-memory data regions, where page eviction can remove data from memory.
+It is available in the <code>io.dataregion.{data_region_name}</code> registry.
+After <code>EvictionsStarted</code> becomes <code>true</code>, it remains <code>true</code> until the node is restarted.
+Use it together with <code>EvictionRate</code> to monitor whether eviction has started and how actively pages are being evicted.</p>
+</div>
+<div class="paragraph">
+<p>Ignite also logs a warning when page-based eviction starts:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="text">Page-based evictions started. Consider increasing 'maxSize' on Data Region configuration: &lt;region_name&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The warning is logged once per data region.
+For monitoring, prefer the <code>EvictionsStarted</code> metric because monitoring tools can use it directly without relying on log parsing.</p>
+</div>
 <div class="paragraph">
 <p>Ignite supports two page selection algorithms:</p>
 </div>
@@ -3455,6 +3476,7 @@ Use the <code>DataRegionConfiguration.setEvictionThreshold(&#8230;&#8203;)</code
 </div>
 <div class="paragraph">
 <p>The differences between the two are explained below.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="random-lru">Random-LRU</h3>
@@ -3705,6 +3727,7 @@ Apache, Apache Ignite, the Apache feather and the Apache Ignite logo are either 
     <ul class="sectlevel1">
 <li><a href="#off-heap-memory-eviction">Off-Heap Memory Eviction</a>
 <ul class="sectlevel2">
+<li><a href="#monitoring-page-eviction">Monitoring Page Eviction</a></li>
 <li><a href="#random-lru">Random-LRU</a></li>
 <li><a href="#random-2-lru">Random-2-LRU</a></li>
 </ul>
@@ -3733,13 +3756,13 @@ Apache, Apache Ignite, the Apache feather and the Apache Ignite logo are either 
     };
     </script>
 
-<script type='module' src='/assets/js/index.js?1779965716' async crossorigin></script>
-<script type='module' src='/assets/js/versioning.js?1779965716' async crossorigin></script>
-<script type='module' src='/assets/js/railroad-diagram.js?1779965716' async></script>
-<script type='module' src='/assets/js/search.js?1779965716' defer crossorigin></script>
+<script type='module' src='/assets/js/index.js?1783577448' async crossorigin></script>
+<script type='module' src='/assets/js/versioning.js?1783577448' async crossorigin></script>
+<script type='module' src='/assets/js/railroad-diagram.js?1783577448' async></script>
+<script type='module' src='/assets/js/search.js?1783577448' defer crossorigin></script>
 
-<link rel="stylesheet" href="/assets/css/styles.css?1779965716" media="print" onload="this.media='all'">
-<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1779965716"></noscript>
+<link rel="stylesheet" href="/assets/css/styles.css?1783577448" media="print" onload="this.media='all'">
+<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1783577448"></noscript>
 
 <link rel="stylesheet" href="/assets/css/docsearch.min.css" media="print" onload="this.media='all'">
 <noscript><link media="all" rel="stylesheet" href="/assets/css/docsearch.min.css"></noscript>
