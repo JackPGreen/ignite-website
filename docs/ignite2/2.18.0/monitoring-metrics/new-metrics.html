@@ -4825,7 +4825,7 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">PagesFillFactor</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">double</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The percentage of the used space.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The average amount of data in non-empty pages as a ratio of the page size.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">PagesRead</p></td>
@@ -4861,6 +4861,11 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">PhysicalMemorySize</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Gets total size of pages loaded to the RAM, in bytes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SizeUsedByData</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Estimated number of bytes occupied by data in the region, taking into account free space inside non-empty pages.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TotalAllocatedPages</p></td>
@@ -5319,13 +5324,13 @@ Apache, Apache Ignite, the Apache feather and the Apache Ignite logo are either 
     };
     </script>
 
-<script type='module' src='/assets/js/index.js?1783577448' async crossorigin></script>
-<script type='module' src='/assets/js/versioning.js?1783577448' async crossorigin></script>
-<script type='module' src='/assets/js/railroad-diagram.js?1783577448' async></script>
-<script type='module' src='/assets/js/search.js?1783577448' defer crossorigin></script>
+<script type='module' src='/assets/js/index.js?1784527226' async crossorigin></script>
+<script type='module' src='/assets/js/versioning.js?1784527226' async crossorigin></script>
+<script type='module' src='/assets/js/railroad-diagram.js?1784527226' async></script>
+<script type='module' src='/assets/js/search.js?1784527226' defer crossorigin></script>
 
-<link rel="stylesheet" href="/assets/css/styles.css?1783577448" media="print" onload="this.media='all'">
-<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1783577448"></noscript>
+<link rel="stylesheet" href="/assets/css/styles.css?1784527226" media="print" onload="this.media='all'">
+<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1784527226"></noscript>
 
 <link rel="stylesheet" href="/assets/css/docsearch.min.css" media="print" onload="this.media='all'">
 <noscript><link media="all" rel="stylesheet" href="/assets/css/docsearch.min.css"></noscript>

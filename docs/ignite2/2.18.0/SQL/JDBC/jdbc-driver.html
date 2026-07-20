@@ -3619,6 +3619,90 @@ The Driver stops reconnecting and throws an exception if all the endpoints are u
 </div>
 </div>
 <div class="sect2">
+<h3 id="blob-and-clob-values">BLOB and CLOB Values</h3>
+<div class="paragraph">
+<p>The JDBC Thin driver supports standard <code>java.sql.Blob</code> and <code>java.sql.Clob</code> objects for binary and character values.
+Store BLOB data in SQL <code>BINARY</code> columns and CLOB data in SQL <code>VARCHAR</code> columns.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>BLOB and CLOB support in the JDBC Thin driver is available since Apache Ignite 2.17.
+CLOB values are intentionally stored in SQL <code>VARCHAR</code> columns, and BLOB values are stored in SQL <code>BINARY</code> columns.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You can create values with <code>Connection.createBlob()</code> and <code>Connection.createClob()</code>, bind them with <code>PreparedStatement.setBlob()</code> and <code>PreparedStatement.setClob()</code>, and read them with <code>ResultSet.getBlob()</code> and <code>ResultSet.getClob()</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="c1">// CLOB values are stored in VARCHAR columns, and BLOB values are stored in BINARY columns.</span>
+<span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">().</span><span class="na">executeUpdate</span><span class="o">(</span>
+        <span class="s">"CREATE TABLE IF NOT EXISTS DocumentStore (id INT PRIMARY KEY, payload BINARY, body VARCHAR)"</span><span class="o">);</span>
+
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">payload</span> <span class="o">=</span> <span class="s">"binary payload"</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="nc">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">);</span>
+
+<span class="nc">PreparedStatement</span> <span class="n">insert</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span>
+        <span class="s">"INSERT INTO DocumentStore(id, payload, body) VALUES (?, ?, ?)"</span><span class="o">);</span>
+
+<span class="nc">Blob</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createBlob</span><span class="o">();</span>
+<span class="n">blob</span><span class="o">.</span><span class="na">setBytes</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">payload</span><span class="o">);</span>
+
+<span class="nc">Clob</span> <span class="n">clob</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createClob</span><span class="o">();</span>
+<span class="n">clob</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"large text body"</span><span class="o">);</span>
+
+<span class="n">insert</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+<span class="n">insert</span><span class="o">.</span><span class="na">setBlob</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">blob</span><span class="o">);</span>
+<span class="n">insert</span><span class="o">.</span><span class="na">setClob</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">clob</span><span class="o">);</span>
+<span class="n">insert</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+
+<span class="nc">PreparedStatement</span> <span class="n">streamInsert</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span>
+        <span class="s">"INSERT INTO DocumentStore(id, payload, body) VALUES (?, ?, ?)"</span><span class="o">);</span>
+
+<span class="n">streamInsert</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+<span class="n">streamInsert</span><span class="o">.</span><span class="na">setBlob</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="k">new</span> <span class="nc">ByteArrayInputStream</span><span class="o">(</span><span class="n">payload</span><span class="o">),</span> <span class="n">payload</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+<span class="n">streamInsert</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s">"large text body"</span><span class="o">);</span>
+<span class="n">streamInsert</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+
+<span class="nc">PreparedStatement</span> <span class="n">select</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="s">"SELECT payload, body FROM DocumentStore WHERE id = ?"</span><span class="o">);</span>
+
+<span class="n">select</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+
+<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+
+<span class="k">if</span> <span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+    <span class="nc">Blob</span> <span class="n">selectedBlob</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getBlob</span><span class="o">(</span><span class="s">"payload"</span><span class="o">);</span>
+    <span class="kt">byte</span><span class="o">[]</span> <span class="n">selectedPayload</span> <span class="o">=</span> <span class="n">selectedBlob</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">selectedBlob</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+
+    <span class="nc">Clob</span> <span class="n">selectedClob</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getClob</span><span class="o">(</span><span class="s">"body"</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="n">selectedBody</span> <span class="o">=</span> <span class="n">selectedClob</span><span class="o">.</span><span class="na">getSubString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">selectedClob</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+
+    <span class="nc">InputStream</span> <span class="n">selectedPayloadStream</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getBinaryStream</span><span class="o">(</span><span class="s">"payload"</span><span class="o">);</span>
+
+    <span class="k">assert</span> <span class="n">selectedPayload</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="n">payload</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+    <span class="k">assert</span> <span class="n">selectedBody</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"large text body"</span><span class="o">);</span>
+    <span class="k">assert</span> <span class="n">selectedPayloadStream</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>BLOB values also support binary stream APIs, including <code>PreparedStatement.setBlob(int, InputStream)</code>, <code>PreparedStatement.setBlob(int, InputStream, long)</code>, <code>PreparedStatement.setBinaryStream()</code>, <code>ResultSet.getBinaryStream()</code>, and <code>Blob.getBinaryStream()</code>.
+When a stream length is provided, it must be non-negative and must match the actual number of bytes read from the stream.</p>
+</div>
+<div class="paragraph">
+<p>CLOB values are supported through <code>Clob</code> object methods such as <code>setString()</code>, <code>getSubString()</code>, and <code>getCharacterStream()</code>.
+Reader-based CLOB setter APIs, such as <code>PreparedStatement.setClob(int, Reader)</code>, and direct <code>ResultSet.getCharacterStream()</code> calls are not supported.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="partition-awareness">Partition Awareness</h3>
 <div class="paragraph">
 <p>Partition awareness is a feature that makes the JDBC driver "aware" of the partition distribution in the cluster.
@@ -4254,6 +4338,7 @@ Apache, Apache Ignite, the Apache feather and the Apache Ignite logo are either 
 <li><a href="#parameters">Parameters</a></li>
 <li><a href="#connection-string-examples">Connection String Examples</a></li>
 <li><a href="#multiple-endpoints">Multiple Endpoints</a></li>
+<li><a href="#blob-and-clob-values">BLOB and CLOB Values</a></li>
 <li><a href="#partition-awareness">Partition Awareness</a></li>
 <li><a href="#cluster-configuration">Cluster Configuration</a></li>
 <li><a href="#using-ssl">Using SSL</a></li>
@@ -4293,13 +4378,13 @@ Apache, Apache Ignite, the Apache feather and the Apache Ignite logo are either 
     };
     </script>
 
-<script type='module' src='/assets/js/index.js?1783577444' async crossorigin></script>
-<script type='module' src='/assets/js/versioning.js?1783577444' async crossorigin></script>
-<script type='module' src='/assets/js/railroad-diagram.js?1783577444' async></script>
-<script type='module' src='/assets/js/search.js?1783577444' defer crossorigin></script>
+<script type='module' src='/assets/js/index.js?1784527223' async crossorigin></script>
+<script type='module' src='/assets/js/versioning.js?1784527223' async crossorigin></script>
+<script type='module' src='/assets/js/railroad-diagram.js?1784527223' async></script>
+<script type='module' src='/assets/js/search.js?1784527223' defer crossorigin></script>
 
-<link rel="stylesheet" href="/assets/css/styles.css?1783577444" media="print" onload="this.media='all'">
-<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1783577444"></noscript>
+<link rel="stylesheet" href="/assets/css/styles.css?1784527223" media="print" onload="this.media='all'">
+<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1784527223"></noscript>
 
 <link rel="stylesheet" href="/assets/css/docsearch.min.css" media="print" onload="this.media='all'">
 <noscript><link media="all" rel="stylesheet" href="/assets/css/docsearch.min.css"></noscript>

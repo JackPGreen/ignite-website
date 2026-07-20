@@ -3796,7 +3796,10 @@ The allocated size is available at the level of data storage, data region, and c
 The metric is called <code>TotalAllocatedSize</code>.</p>
 </div>
 <div class="paragraph">
-<p>You can also get an estimate of the actual size of data by multiplying the number of <a href="/docs/ignite2/latest/memory-architecture#data-pages">data pages</a> in use by the fill factor. The fill factor is the ratio of the size of data in a page to the page size, averaged over all pages. The number of pages in use and the fill factor are available at the level of data <a href="#data-region-size">region metrics</a>.</p>
+<p>For <a href="/docs/ignite2/latest/memory-configuration/data-regions">data region</a> metrics, Ignite also exposes the <code>SizeUsedByData</code> metric.
+It estimates how many bytes are currently occupied by data in the region.
+The metric is calculated as <code>(TotalAllocatedPages - EmptyDataPages) * pageSize * PagesFillFactor</code>. <code>PagesFillFactor</code> is the average ratio of data bytes to page size in non-empty data pages.
+Use <code>SizeUsedByData</code> when you need a more direct estimate of how much data is stored in the region, and use <code>TotalAllocatedSize</code> when you need to monitor how much space has already been allocated for that region.</p>
 </div>
 <div class="paragraph">
 <p>Add up the estimated size of all data regions to get the estimated total amount of data on the node.</p>
@@ -3930,9 +3933,15 @@ The total amount of data each node keeps on disk consists of the persistent stor
 <td class="tableblock halign-left valign-top"><p class="tableblock">Node</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SizeUsedByData</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The estimated number of bytes occupied by data in this data region, taking into account free space inside non-empty pages.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Node</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">PagesFillFactor</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">float</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The average amount of data in pages as a ratio of the page size.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The average amount of data in non-empty pages as a ratio of the page size.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Node</p></td>
 </tr>
 <tr>
@@ -4486,13 +4495,13 @@ Apache, Apache Ignite, the Apache feather and the Apache Ignite logo are either 
     };
     </script>
 
-<script type='module' src='/assets/js/index.js?1783577448' async crossorigin></script>
-<script type='module' src='/assets/js/versioning.js?1783577448' async crossorigin></script>
-<script type='module' src='/assets/js/railroad-diagram.js?1783577448' async></script>
-<script type='module' src='/assets/js/search.js?1783577448' defer crossorigin></script>
+<script type='module' src='/assets/js/index.js?1784527226' async crossorigin></script>
+<script type='module' src='/assets/js/versioning.js?1784527226' async crossorigin></script>
+<script type='module' src='/assets/js/railroad-diagram.js?1784527226' async></script>
+<script type='module' src='/assets/js/search.js?1784527226' defer crossorigin></script>
 
-<link rel="stylesheet" href="/assets/css/styles.css?1783577448" media="print" onload="this.media='all'">
-<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1783577448"></noscript>
+<link rel="stylesheet" href="/assets/css/styles.css?1784527226" media="print" onload="this.media='all'">
+<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1784527226"></noscript>
 
 <link rel="stylesheet" href="/assets/css/docsearch.min.css" media="print" onload="this.media='all'">
 <noscript><link media="all" rel="stylesheet" href="/assets/css/docsearch.min.css"></noscript>
