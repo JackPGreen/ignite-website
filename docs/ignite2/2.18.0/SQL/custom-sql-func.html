@@ -3490,6 +3490,30 @@ The table functions and application attributes are currently available only with
 <div class="title">Note</div>
 </td>
 <td class="content">
+With <a href="/docs/ignite2/latest/SQL/sql-calcite" target="_blank" rel="noopener">Calcite</a>, a custom SQL function can execute nested SQL queries through Ignite APIs such as <code>SqlFieldsQuery</code> only when the blocking query task executor is enabled with the <code>-DIGNITE_CALCITE_USE_QUERY_BLOCKING_TASK_EXECUTOR=true</code> system property. The default striped query task executor can lead to deadlocks for queries started from user-defined functions.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+When nested SQL queries are executed from user-defined functions, configure <code>IgniteConfiguration.QueryThreadPoolSize</code> so it is greater than the maximum number of concurrent queries initiated from UDFs. Otherwise, nested queries can fail because of query thread pool starvation.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
 Classes registered with <code>CacheConfiguration.setSqlFunctionClasses(&#8230;&#8203;)</code> must be added to the classpath of all the nodes where the defined custom functions might be executed. Otherwise, you will get a <code>ClassNotFoundException</code> error when trying to execute the custom function.
 </td>
 </tr>
@@ -3527,13 +3551,13 @@ Apache, Apache Ignite, the Apache feather and the Apache Ignite logo are either 
     };
     </script>
 
-<script type='module' src='/assets/js/index.js?1784527223' async crossorigin></script>
-<script type='module' src='/assets/js/versioning.js?1784527223' async crossorigin></script>
-<script type='module' src='/assets/js/railroad-diagram.js?1784527223' async></script>
-<script type='module' src='/assets/js/search.js?1784527223' defer crossorigin></script>
+<script type='module' src='/assets/js/index.js?1786428596' async crossorigin></script>
+<script type='module' src='/assets/js/versioning.js?1786428596' async crossorigin></script>
+<script type='module' src='/assets/js/railroad-diagram.js?1786428596' async></script>
+<script type='module' src='/assets/js/search.js?1786428596' defer crossorigin></script>
 
-<link rel="stylesheet" href="/assets/css/styles.css?1784527223" media="print" onload="this.media='all'">
-<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1784527223"></noscript>
+<link rel="stylesheet" href="/assets/css/styles.css?1786428596" media="print" onload="this.media='all'">
+<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1786428596"></noscript>
 
 <link rel="stylesheet" href="/assets/css/docsearch.min.css" media="print" onload="this.media='all'">
 <noscript><link media="all" rel="stylesheet" href="/assets/css/docsearch.min.css"></noscript>
