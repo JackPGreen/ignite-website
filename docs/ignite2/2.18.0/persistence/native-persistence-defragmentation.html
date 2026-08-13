@@ -3400,7 +3400,7 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Defragmentation can only be used with historical rebalance enabled. If historical rebalancing is disabled, the server node always triggers full rebalance after the restart, which would throw away the defragmented partition. A full set of data is transferred to the node from other nodes over a network. Depending on the dataset’s size, transferring may require significant time and slow down the whole cluster as network capacity is essential to fulfill user requests.</p>
+<p>Defragmentation itself does not require <a href="/docs/ignite2/latest/data-rebalancing">historical rebalancing</a>. However, when the node returns to the cluster after defragmentation, it has to rebalance its partitions. If historical rebalancing is unavailable, the node performs a full rebalance, which transfers complete partitions from other nodes and can overwrite the defragmented files, negating the reclaimed disk space. Make sure that the required WAL history remains available on the supplier nodes until the defragmented node rejoins the cluster.</p>
 </div>
 </td>
 </tr>
@@ -3419,11 +3419,15 @@
 <div class="paragraph">
 <p>To request defragmentation, use the following command:</p>
 </div>
-<div class="listingblock">
+<code-tabs><code-tab data-tab='Unix'><div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell">control.<span class="o">(</span>sh|bat<span class="o">)</span> <span class="nt">--defragmentation</span> schedule <span class="nt">--nodes</span> &lt;consistentIds&gt; <span class="o">[</span><span class="nt">--caches</span> &lt;cacheNames&gt;]</code></pre>
+<pre class="rouge highlight"><code data-lang="shell">control.sh <span class="nt">--defragmentation</span> schedule <span class="nt">--nodes</span> &lt;consistentIds&gt; <span class="o">[</span><span class="nt">--caches</span> &lt;cacheNames&gt;]</code></pre>
 </div>
+</div></code-tab><code-tab data-tab='Windows'><div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">control.bat <span class="nt">--defragmentation</span> schedule <span class="nt">--nodes</span> &lt;consistentIds&gt; <span class="o">[</span><span class="nt">--caches</span> &lt;cacheNames&gt;]</code></pre>
 </div>
+</div></code-tab></code-tabs>
 <div class="paragraph">
 <p>After the manual restart, the node with the requested defragmentation enters a special mode called maintenance mode. The node in maintenance mode does not join the rest of the cluster but remains isolated until defragmentation is completed (or canceled by explicit user request). After that, the user has to restart the node one more time: it exits maintenance mode and returns to normal operations (joining the cluster and starting to serve regular workload).</p>
 </div>
@@ -3443,15 +3447,34 @@
 </div>
 </div>
 <div class="sect2">
+<h3 id="checking-defragmentation-status">Checking Defragmentation Status</h3>
+<div class="paragraph">
+<p>To check the status of an ongoing defragmentation operation, run the following command against the node in Maintenance Mode:</p>
+</div>
+<code-tabs><code-tab data-tab='Unix'><div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">control.sh <span class="nt">--host</span> &lt;host&gt; <span class="nt">--port</span> &lt;port&gt; <span class="nt">--defragmentation</span> status</code></pre>
+</div>
+</div></code-tab><code-tab data-tab='Windows'><div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">control.bat <span class="nt">--host</span> &lt;host&gt; <span class="nt">--port</span> &lt;port&gt; <span class="nt">--defragmentation</span> status</code></pre>
+</div>
+</div></code-tab></code-tabs>
+</div>
+<div class="sect2">
 <h3 id="stopping-defragmentation">Stopping Defragmentation</h3>
 <div class="paragraph">
 <p>When a node executes defragmentation, it is possible to cancel it. To stop defragmentation, run the following command available in the control utility:</p>
 </div>
-<div class="listingblock">
+<code-tabs><code-tab data-tab='Unix'><div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="shell">control.<span class="o">(</span>sh|bat<span class="o">)</span> <span class="nt">--defragmentation</span> cancel <span class="nt">--host</span> <span class="nt">--port</span></code></pre>
+<pre class="rouge highlight"><code data-lang="shell">control.sh <span class="nt">--host</span> &lt;host&gt; <span class="nt">--port</span> &lt;port&gt; <span class="nt">--defragmentation</span> cancel</code></pre>
 </div>
+</div></code-tab><code-tab data-tab='Windows'><div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="shell">control.bat <span class="nt">--host</span> &lt;host&gt; <span class="nt">--port</span> &lt;port&gt; <span class="nt">--defragmentation</span> cancel</code></pre>
 </div>
+</div></code-tab></code-tabs>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -3460,7 +3483,10 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>To reduce disk space requirements during defragmentation, caches are defragmented one by one (if a defragmentation of more than one cache is requested). To calculate additional required space, find the cache that occupies the most disk space. The same amount of disk space is required for defragmentation at max.</p>
+<p>During defragmentation, the original partition and index files coexist with their defragmented copies. Cache groups are processed one at a time, and the original files are replaced only after the whole cache group has been defragmented. Reserve free disk space approximately equal to the on-disk size of the largest cache group being defragmented. If little space can be reclaimed, the peak disk usage for that cache group can approach twice its original size, plus temporary link-mapping files.</p>
+</div>
+<div class="paragraph">
+<p>If a cache belongs to a shared cache group, selecting that cache for defragmentation causes the entire cache group to be defragmented.</p>
 </div>
 </td>
 </tr>
@@ -3494,6 +3520,7 @@ Apache, Apache Ignite, the Apache feather and the Apache Ignite logo are either 
 <li><a href="#performing-defragmentation">Performing Defragmentation</a>
 <ul class="sectlevel2">
 <li><a href="#starting-defragmentation">Starting Defragmentation</a></li>
+<li><a href="#checking-defragmentation-status">Checking Defragmentation Status</a></li>
 <li><a href="#stopping-defragmentation">Stopping Defragmentation</a></li>
 </ul>
 </li>
@@ -3521,13 +3548,13 @@ Apache, Apache Ignite, the Apache feather and the Apache Ignite logo are either 
     };
     </script>
 
-<script type='module' src='/assets/js/index.js?1786428600' async crossorigin></script>
-<script type='module' src='/assets/js/versioning.js?1786428600' async crossorigin></script>
-<script type='module' src='/assets/js/railroad-diagram.js?1786428600' async></script>
-<script type='module' src='/assets/js/search.js?1786428600' defer crossorigin></script>
+<script type='module' src='/assets/js/index.js?1786598676' async crossorigin></script>
+<script type='module' src='/assets/js/versioning.js?1786598676' async crossorigin></script>
+<script type='module' src='/assets/js/railroad-diagram.js?1786598676' async></script>
+<script type='module' src='/assets/js/search.js?1786598676' defer crossorigin></script>
 
-<link rel="stylesheet" href="/assets/css/styles.css?1786428600" media="print" onload="this.media='all'">
-<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1786428600"></noscript>
+<link rel="stylesheet" href="/assets/css/styles.css?1786598676" media="print" onload="this.media='all'">
+<noscript><link media="all" rel="stylesheet" href="/assets/css/styles.css?1786598676"></noscript>
 
 <link rel="stylesheet" href="/assets/css/docsearch.min.css" media="print" onload="this.media='all'">
 <noscript><link media="all" rel="stylesheet" href="/assets/css/docsearch.min.css"></noscript>
